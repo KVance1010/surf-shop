@@ -35,25 +35,3 @@ declare module "next-auth/adapters" {
 
 export type ExtendedUser = Session["user"];
 
-
-
-
-// import { type DefaultSession } from "next-auth";
-// import { ExtendedUser } from "@/types/next-auth";
-
-// declare module "next-auth" {
-//   interface Session {
-//     user: {
-//       id: string;
-//       role: "USER" | "ADMIN" | "MODERATOR";
-//       isTwoFactorEnabled: boolean;
-//       isOAuth: boolean;
-//       username: string | null;
-//       name: string | null;
-//       email: string;
-//       emailVerified: Date | null;
-//       image: string | null;
-//     } & DefaultSession["user"];
-//   }
-// }
-// export type ExtendedUser = Session["user"];
