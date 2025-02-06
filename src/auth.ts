@@ -40,8 +40,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider !== "credentials") return true;
-      return !!user;
+      if (account?.provider === "credentials") {
+        return !!user;
+      }
+      try {
+        const existingUser = await getUserByEmail(user?.email as string);
+
+        if (existingUser?.password) {
+          return "/login?error=CredentialsOnly";
+        }
+        return true;
+      } catch {
+        return "/login?error=OAuthError";
+      }
     },
 
     async jwt({ account, token, user }) {
