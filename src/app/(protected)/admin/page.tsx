@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { AdminForm } from "./_components/admin-from";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { currentUser } from "@/utils/auth-session";
+import { AdminForm } from "../../../components/admin/admin-from";
 
 const AdminPage = async () => {
   const user = await currentUser();

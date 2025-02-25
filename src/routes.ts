@@ -10,7 +10,13 @@ export const publicRoutes: string[] = ["/"];
  * these routes will redirect logged out users to the login page
  * @type {string[]}
  */
-export const authRoutes: string[] = ["/login", "/register", "/verification", "/reset", "/new-password"];
+export const authRoutes: string[] = [
+  "/login",
+  "/register",
+  "/verification",
+  "/reset",
+  "/new-password"
+];
 
 /**
  * an array of routes that require admin privileges

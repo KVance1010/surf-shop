@@ -1,9 +1,9 @@
-import env from "@/validations/env";
 import nodemailer from "nodemailer";
 import "server-only";
+import env from "@/validations/env";
 
 const transporter = nodemailer.createTransport({
-   /*if the service is on the list of nodemailer services, use it instead of host, port, secure. If you specify a service (e.g., 'gmail', 'outlook', 'yahoo'), Nodemailer automatically configures the host and port for you. */
+  /*if the service is on the list of nodemailer services, use it instead of host, port, secure. If you specify a service (e.g., 'gmail', 'outlook', 'yahoo'), Nodemailer automatically configures the host and port for you. */
   service: env.MAILER_SERVICE,
 
   /*

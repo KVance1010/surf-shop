@@ -1,11 +1,11 @@
 "use server";
 
+import { NeonDbError } from "@neondatabase/serverless";
 import { generateVerificationToken } from "@/db/queries/auth/verification-tokens";
 import { createUser } from "@/db/queries/users";
 import { sendVerificationEmail } from "@/email-templates/welcome-verification";
 import { hashPassword } from "@/utils/password";
 import { RegistrationType, RegistrationValidation } from "@/validations/users";
-import { NeonDbError } from "@neondatabase/serverless";
 
 export const register = async (value: RegistrationType) => {
   try {

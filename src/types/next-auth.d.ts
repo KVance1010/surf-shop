@@ -1,4 +1,3 @@
-import { ExtendedUser } from "@/types/next-auth";
 import { type DefaultSession } from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {
@@ -13,25 +12,22 @@ export type ExtendedUser = DefaultSession["user"] & {
 };
 
 declare module "next-auth" {
-interface Session {
-user: ExtendedUser;
-}
+  interface Session {
+    user: ExtendedUser;
+  }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     role?: "USER" | "ADMIN" | "MODERATOR";
     sessionId?: string;
-    provide?: string;
+    provider?: string;
+    user: ExtendedUser;
   }
 }
 
 declare module "next-auth/adapters" {
   interface AdapterUser {
-    emailVerified?: Date | null; 
+    emailVerified?: Date | null;
   }
 }
-
-
-export type ExtendedUser = Session["user"];
-

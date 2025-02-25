@@ -22,7 +22,7 @@ export default auth(async (req) => {
   const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
   const token = await getToken({ req, secret: process.env.AUTH_SECRET });
   const userRole = token?.role;
-  
+
   if (isApiAuthRoute) {
     return;
   }

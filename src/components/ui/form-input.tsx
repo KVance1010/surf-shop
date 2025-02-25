@@ -20,7 +20,7 @@ export const FormInput = ({
   required = false,
   error,
   register
-}:  FormInputProps) => {
+}: FormInputProps) => {
   return (
     <div className="mb-4">
       {label && (

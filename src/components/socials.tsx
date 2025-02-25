@@ -10,7 +10,7 @@ export const Socials = () => {
 
   return (
     <button
-      onClick={handleProviderLogin }
+      onClick={handleProviderLogin}
       className="bg-white self-center w-full my-2 hover:bg-blue-400 text-black p-2 
    text-center rounded-lg"
     >
