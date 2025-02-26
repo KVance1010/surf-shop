@@ -1,4 +1,5 @@
 import { sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
   type AnyPgColumn,
   boolean,
@@ -8,6 +9,7 @@ import {
   timestamp,
   uniqueIndex
 } from "drizzle-orm/pg-core";
+import { addresses, orders, reviews } from "@/db/schemas";
 import { timestamps } from "./timestamps";
 
 export const UserRoles = pgEnum("role", ["USER", "ADMIN", "MODERATOR"]);
@@ -36,3 +38,9 @@ export const users = pgTable(
     uniqueIndex("email_unique_index").on(emailToLowercase(table.email))
   ]
 );
+
+export const userRelations = relations(users, ({ many }) => ({
+  addresses: many(addresses),
+  orders: many(orders),
+  reviews: many(reviews)
+}));
