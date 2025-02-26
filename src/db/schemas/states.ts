@@ -4,6 +4,6 @@ export const states = pgTable("states", {
   id: text()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name"),
-  code: text("code")
+  name: text("name").unique(),
+  code: text("code").unique()
 });
