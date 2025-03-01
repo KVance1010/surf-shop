@@ -1,15 +1,16 @@
 import Image from "next/image";
-import { Nav } from "./nav";
 import { Icons } from "./icons";
+import { Nav } from "./nav";
+import Link from "next/link";
 
-export const header = () => {
+export const Header = () => {
   return (
-    <div>
-      <div className="relative w-full h-65">
-        <Image src="/logo.png" alt="Surf Shop Logo" fill unoptimized />
-      </div>
+    <header className="flex bg-primary text-primary-foreground items-center justify-between px-20 py-5">
+      <Link href="/" className="relative h-[67px] w-[317px]">
+        <Image src="/brand.svg" alt="Surf Shop Logo" fill unoptimized />
+      </Link>
       <Nav />
       <Icons />
-    </div>
+    </header>
   );
 };

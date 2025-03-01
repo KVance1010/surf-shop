@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { currentUser } from "@/utils/auth-session";
-import { Profile } from "../../../components/profile/profile";
+import { Profile } from "./_components/profile";
 
 const ProfilePage = async () => {
   const user = await currentUser();
