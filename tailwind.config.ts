@@ -10,6 +10,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        sm: "581px",
+        md: "660px",
+        lg: "1094px",
+        xl: "1280px",
+        "2xl": "1536px"
+      },
       colors: {
         primary: {
           DEFAULT: "var(--primary)",

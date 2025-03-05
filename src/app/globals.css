@@ -2,9 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer {
+  .font-stroke-dark-1 {
+    -webkit-text-stroke: 1px var(--primary);
+    text-shadow: 5px 5px 5px var(--primary);
+  }
+  .font-stroke-dark-2 {
+    text-shadow: 3px 3px 3px var(--primary);
+  }
+  .font-stroke-light {
+    text-shadow: 5px 5px 5px var(--secondary);
+  }
+  .font-stroke-accent {
+    text-shadow: 5px 5px 5px var(--accent);
+  }
+}
+
 :root {
   /* Primary Colors */
-  --primary: hsl(220, 97%, 18%); /* #04245c */
+  --primary: hsl(220, 98%, 18%); /* #04245c */
   --primary-foreground: hsl(207, 64%, 94%); /* #e3f0fa */
 
   /* Secondary Colors */
@@ -58,6 +74,6 @@
 
 /* Apply Tailwind `font-sans` correctly */
 body {
-  @apply text-base text-foreground bg-background font-sans;
+  @apply bg-background font-sans text-base text-foreground;
   font-family: var(--font-body);
 }
