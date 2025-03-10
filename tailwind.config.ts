@@ -11,8 +11,10 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
+        xs: "375px",
         sm: "581px",
         md: "660px",
+        mdl:"895px",
         lg: "1094px",
         xl: "1280px",
         "2xl": "1536px"
@@ -70,9 +72,9 @@ const config: Config = {
         // md	1.5rem	24px
         md: ["1.5rem", { lineHeight: "1.5rem" }],
         // lg	2rem	32px
-        lg: ["2rem", { lineHeight: "1.75rem" }],
+        lg: ["2.38rem", { lineHeight: "2rem" }],
         // xl	2.25rem	36px
-        xl: ["2.25rem", { lineHeight: "1.75rem" }],
+        xl: ["2.25rem", { lineHeight: "2rem" }],
         // 2xl	3rem	48px
         "2xl": ["3rem", { lineHeight: "2rem" }],
         // 3xl	4rem	64px
