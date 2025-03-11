@@ -21,3 +21,50 @@ export const categories = [
     link: "/accessories"
   }
 ];
+
+export const favProducts = {
+ womens: [
+    {
+      id: "women1",
+      name: "Swimsuit",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    },
+    {
+      id: "women2",
+      name: "Bikinis",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    },
+    {
+      id: "women3",
+      name: "Sweatshirts",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    },
+    {
+      id: "women4",
+      name: "Wetsuits",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    }
+  ],
+  mens:[
+    {
+      id: "men1",
+      name: "Swimsuit",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    },
+    {
+      id: "men2",
+      name: "Board shorts",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    },
+    {
+      id: "men3",
+      name: "Sweatshirts",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    },
+    {
+      id: "men4",
+      name: "Wetsuits",
+      mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
+    }
+  ]
+};

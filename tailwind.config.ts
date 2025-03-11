@@ -90,7 +90,7 @@ const config: Config = {
         }
       },
       backgroundImage: {
-        "parallax-pipe": "url('/pipe.webp')",
+        "parallax-pipe": "url('/pipe.webp')"
       }
     }
   },

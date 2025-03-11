@@ -6,9 +6,13 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { passwordReset } from "@/actions/auth/password-reset";
-import { FormButton, FormInput, FormWrapper } from "@/components/ui";
-import { FormError } from "@/components/ui/form-error";
-import { FormSuccess } from "@/components/ui/form-success";
+import {
+  FormButton,
+  FormError,
+  FormInput,
+  FormSuccess,
+  FormWrapper
+} from "@/components/ui/form";
 import { NewPasswordType, NewPasswordValidation } from "@/validations";
 
 const NewPasswordForm = () => {

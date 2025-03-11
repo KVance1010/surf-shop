@@ -5,8 +5,12 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { passwordResetRequest } from "@/actions/auth/password-reset";
-import { FormButton, FormInput, FormWrapper } from "@/components/ui";
-import { FormError } from "@/components/ui/form-error";
+import {
+  FormButton,
+  FormError,
+  FormInput,
+  FormWrapper
+} from "@/components/ui/form";
 import { ResetType, ResetValidation } from "@/validations";
 
 const ResetForm = () => {

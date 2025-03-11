@@ -1,7 +1,7 @@
-import { CategoryCard } from "@/components/ui/category-card";
-import { TitleContainer } from "@/components/ui/title-container";
-import { InfiniteCarousel } from "../ui/infinite-carousel";
+import { CategoryCard } from "@/components/ui-custom/category-card";
+import { TitleContainer } from "@/components/ui-custom/title-container";
 import { categories } from "@/utils/fake-items";
+import { InfiniteCarousel } from "../ui-custom/infinite-carousel";
 
 export const Shop = () => {
   return (

@@ -9,28 +9,28 @@ export const HamburgerMenu = async () => {
 
   return (
     <label className="flex flex-col justify-center mb-1 gap-2 w-10 h-10 max-sm:w-7  cursor-pointer relative">
-      <input id="hamburger-checkbox" type="checkbox" className="peer hidden" />
+      <input id="hamburger-checkbox" type="checkbox" className="peer hidden group" />
 
       <div
-        className="w-4/5 h-[2px] bg-secondary rounded-md transition-all duration-500 translate-x-[2px]
+        className="w-4/5 h-[2px] bg-secondary rounded-md transition-all duration-500 translate-x-[2px] 
                       peer-checked:rotate-45 peer-checked:translate-y-[10px] peer-checked:translate-x-[3px] max-sm:peer-checked:translate-y-[12px]"
       ></div>
 
       <div
-        className="w-full h-[2px] bg-secondary rounded-md transition-all duration-500
+        className="w-full h-[2px] bg-secondary rounded-md transition-all duration-500 
                       peer-checked:scale-x-0"
       ></div>
 
       <div
-        className="w-4/5 h-[2px] bg-secondary rounded-md transition-all duration-500 origin-left translate-x-[2px]
+        className="w-4/5 h-[2px] bg-secondary rounded-md transition-all duration-500 origin-left translate-x-[2px] 
                       peer-checked:-rotate-45 peer-checked:translate-y-[1px] peer-checked:translate-x-[5px]"
       ></div>
 
-      <section className="absolute w-52 max-w-sm -left-16 max-sm:-left-32 top-[120%] bg-white text-primary rounded-lg overflow-hidden shadow-lg transition-all duration-300 max-h-0 peer-checked:max-h-[600px] peer-checked:border">
+      <section className="group absolute w-52 max-w-sm -left-16 max-sm:-left-32 top-[120%] bg-white text-primary rounded-lg overflow-hidden shadow-lg transition-all duration-300 max-h-0 peer-checked:max-h-[600px] peer-checked:border">
         <nav>
           <ul className="w-full">
             {navHeaders.map((header) => (
-              <li className="w-full" key={header.title}>
+              <li className="w-full " key={header.title}>
                 {header.href ? (
                   <Link
                     href={header.href}
