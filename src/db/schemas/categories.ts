@@ -1,6 +1,6 @@
-import {text, pgTable} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
-import { products } from "@/db/schemas/products";
+import { pgTable, text } from "drizzle-orm/pg-core";
+import { images, products } from "@/db/schemas";
 
 export const categories = pgTable("categories", {
   id: text()
@@ -8,8 +8,13 @@ export const categories = pgTable("categories", {
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   slug: text("slug").unique(),
+  imageId: text("image_id")
 });
 
-export const categoryRelations = relations(categories, ({ many }) => ({
+export const categoryRelations = relations(categories, ({ many, one }) => ({
   products: many(products),
+  categoryImage: one(images, {
+    fields: [categories.imageId],
+    references: [images.id]
+  })
 }));

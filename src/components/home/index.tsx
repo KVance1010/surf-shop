@@ -1,9 +1,11 @@
 import { Hero } from "./hero";
+import { Shop } from "./shop";
 
 export const HomePageContent = () => {
   return (
-    <div className="relative" >
+    <div className="relative">
       <Hero />
+      <Shop />
     </div>
   );
 };

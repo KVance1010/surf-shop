@@ -4,6 +4,7 @@
 
 @layer {
   .font-stroke-dark-1 {
+    /* -webkit-text-stroke: 1px var(--primary); */
     -webkit-text-stroke: 1px var(--primary);
     text-shadow: 5px 5px 5px var(--primary);
   }

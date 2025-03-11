@@ -14,7 +14,7 @@ const config: Config = {
         xs: "375px",
         sm: "581px",
         md: "660px",
-        mdl:"895px",
+        mdl: "895px",
         lg: "1094px",
         xl: "1280px",
         "2xl": "1536px"
@@ -79,6 +79,15 @@ const config: Config = {
         "2xl": ["3rem", { lineHeight: "2rem" }],
         // 3xl	4rem	64px
         "3xl": ["4rem", { lineHeight: "2.25rem" }]
+      },
+      animation: {
+        "infinite-scroll": "infinite-scroll 20s linear infinite"
+      },
+      keyframes: {
+        "infinite-scroll": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(calc(-50% - 40px))" }
+        }
       }
     }
   },

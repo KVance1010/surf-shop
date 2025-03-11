@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { verifyToken } from "@/actions/auth/validation";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
 import { FormWrapper } from "@/components/ui";
+import { FormError } from "@/components/ui/form-error";
+import { FormSuccess } from "@/components/ui/form-success";
 
 const VerificationForm = () => {
   const searchParams = useSearchParams();

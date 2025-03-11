@@ -5,8 +5,8 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { passwordResetRequest } from "@/actions/auth/password-reset";
-import { FormError } from "@/components/form-error";
 import { FormButton, FormInput, FormWrapper } from "@/components/ui";
+import { FormError } from "@/components/ui/form-error";
 import { ResetType, ResetValidation } from "@/validations";
 
 const ResetForm = () => {
