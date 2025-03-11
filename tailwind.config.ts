@@ -88,6 +88,9 @@ const config: Config = {
           "0%": { transform: "translateX(0%)" },
           "100%": { transform: "translateX(calc(-50% - 40px))" }
         }
+      },
+      backgroundImage: {
+        "parallax-pipe": "url('/pipe.webp')",
       }
     }
   },
