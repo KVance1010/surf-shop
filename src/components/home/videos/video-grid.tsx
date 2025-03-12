@@ -1,12 +1,12 @@
 import React from "react";
-import { VideoCard } from "./video-card";
+import { VideoCard } from "../../ui-custom/video-card";
 
 export const VideoGrid: React.FC = () => {
   return (
     <section>
-      <h2 className="mb-9 text-2xl font-medium text-blue-950">
+      <h4 className="mb-9 text-xl font-medium text-subtitle text-primary">
         Trending Videos
-      </h2>
+      </h4>
       <div className="grid gap-9 mb-10 grid-cols-[repeat(3,1fr)] max-md:grid-cols-[repeat(2,1fr)] max-sm:gap-6 max-sm:grid-cols-[1fr]">
         <VideoCard
           imageUrl="https://cdn.builder.io/api/v1/image/assets/TEMP/e5de99233652f6ce9c63b97f3e055d40104e3b8d"

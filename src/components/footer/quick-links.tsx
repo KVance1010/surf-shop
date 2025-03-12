@@ -4,12 +4,12 @@ export const QuickLinks = () => {
       className="flex flex-col gap-2.5 max-md:w-auto max-md:min-w-[200px] max-sm:items-center max-sm:w-full"
       aria-label="Quick links"
     >
-      <h2 className="mb-5 text-xl font-medium text-orange-300">Quick Links</h2>
+      <h4 className="mb-5 text-md font-medium text-accent">Quick Links</h4>
       <ul className="flex flex-col gap-2.5 max-sm:items-center">
         <li>
           <a
             href="/about"
-            className="text-xl text-sky-100 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300 rounded"
+            className="text-base text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
           >
             About Us
           </a>
@@ -17,7 +17,7 @@ export const QuickLinks = () => {
         <li>
           <a
             href="/contact"
-            className="text-xl text-sky-100 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300 rounded"
+            className="text-base text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
           >
             Contact
           </a>
@@ -25,7 +25,7 @@ export const QuickLinks = () => {
         <li>
           <a
             href="/shipping"
-            className="text-xl text-sky-100 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300 rounded"
+            className="text-base text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
           >
             Shipping
           </a>

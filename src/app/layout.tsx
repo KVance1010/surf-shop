@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Lato, Montserrat, Poppins } from "next/font/google";
-// import { Footer } from "@/components/footer";
+import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { cn } from "@/utils/tailwind-clsx";
 import "./globals.css";
@@ -50,7 +50,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );

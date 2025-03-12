@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { PlayButton } from "./play-button";
 
@@ -11,7 +12,7 @@ interface VideoCardProps {
 export const VideoCard: React.FC<VideoCardProps> = ({
   imageUrl,
   altText,
-  title,
+  title
 }) => {
   return (
     <article className="flex flex-col gap-6">
@@ -21,9 +22,9 @@ export const VideoCard: React.FC<VideoCardProps> = ({
           <PlayButton />
         </div>
       </div>
-      <h3 className="text-xl font-bold text-blue-950 max-sm:text-base">
+      <h5 className="text-md font-medium text-primary text-sans max-sm:text-base">
         {title}
-      </h3>
+      </h5>
     </article>
   );
 };
