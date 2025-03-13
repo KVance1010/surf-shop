@@ -1,10 +1,10 @@
 export { addresses } from "./addresses";
 export { accounts, authenticators, sessions } from "./auth";
-export { carts } from "./carts";
+export { carts, cartRelations } from "./carts";
 export { categories, categoryRelations } from "./categories";
 export { images } from "./images";
 export { orderItems } from "./order-items";
-export { orders } from "./orders";
+export { orders, orderRelations, OrderStatus } from "./orders";
 export { productOptions } from "./product-options";
 export { productRelations, products } from "./products";
 export { reviewRelations, reviews } from "./reviews";
@@ -15,4 +15,4 @@ export {
   twoFactorTokens,
   verificationTokens
 } from "./tokens";
-export { userRelations, users } from "./users";
+export { userRelations, users, UserRoles  } from "./users";

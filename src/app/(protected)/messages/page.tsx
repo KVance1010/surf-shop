@@ -1,5 +1,6 @@
+import { Messages } from "@/components/pages/messages";
 const MessagesPage = () => {
-  return <div>Messages</div>;
+  return <Messages />;
 };
 
 export default MessagesPage;

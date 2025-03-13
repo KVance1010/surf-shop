@@ -1,5 +1,5 @@
 import React from "react";
-import { VideoCard } from "../../ui-custom/video-card";
+import { VideoCard } from "../../../ui-custom/video-card";
 
 export const VideoGrid: React.FC = () => {
   return (

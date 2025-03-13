@@ -1,34 +1,36 @@
+import Link from "next/link";
+
 export const QuickLinks = () => {
   return (
     <nav
-      className="flex flex-col gap-2.5 max-md:w-auto max-md:min-w-[200px] max-sm:items-center max-sm:w-full"
+      className="flex flex-col gap-2 max-md:w-auto max-md:min-w-[200px] max-sm:items-center max-sm:w-full"
       aria-label="Quick links"
     >
-      <h4 className="mb-5 text-md font-medium text-accent">Quick Links</h4>
-      <ul className="flex flex-col gap-2.5 max-sm:items-center">
+      <h4 className=" text-base font-medium text-subtitle text-accent">Quick Links</h4>
+      <ul className="flex flex-col gap-1.5 max-sm:items-center">
         <li>
-          <a
+          <Link
             href="/about"
-            className="text-base text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
+            className="text-sm text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
           >
             About Us
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/contact"
-            className="text-base text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
+            className="text-sm text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
           >
             Contact
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/shipping"
-            className="text-base text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
+            className="text-sm text-secondary hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
           >
             Shipping
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

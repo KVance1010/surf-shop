@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import VerificationForm from "@/components/auth/verification-form";
+import VerificationForm from "@/components/pages/auth/verification-form";
 
 export default function VerificationPage() {
   return (

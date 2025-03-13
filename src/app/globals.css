@@ -3,12 +3,17 @@
 @tailwind utilities;
 
 @layer {
+  .focus-ring-no-left {
+    @apply focus:outline-none focus:ring-0 peer-focus:ring-0;
+  }
+  .focus-ring-no-left:focus-visible {
+    box-shadow: 0 -2px 0 2px var(--accent), 2px 0 0 2px var(--accent), 0 2px 0 2px var(--accent);
+  }
   .font-stroke-dark-1 {
-    /* -webkit-text-stroke: 1px var(--primary); */
     -webkit-text-stroke: 1px var(--primary);
     text-shadow: 5px 5px 5px var(--primary);
   }
-  .font-stroke-dark-2 {
+  /* .font-stroke-dark-2 {
     text-shadow: 3px 3px 3px var(--primary);
   }
   .font-stroke-light {
@@ -16,7 +21,7 @@
   }
   .font-stroke-accent {
     text-shadow: 5px 5px 5px var(--accent);
-  }
+  } */
 }
 
 :root {
@@ -56,7 +61,7 @@
   --ring: hsl(214, 15%, 85%);
   --radius: 0.5rem;
 
-  /* Font Variables (Mapped from RootLayout.tsx) */
+  /* Font Variables */
   --font-title: "Poppins", "Roboto", "Arial", "Helvetica", "sans-serif";
   --font-subtitle: "Montserrat", "Open Sans", "Segoe UI", "Tahoma", "sans-serif";
   --font-body: "Lato", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif";
@@ -73,7 +78,7 @@
   --popover-foreground: var(--foreground-dark);
 }
 
-/* Apply Tailwind `font-sans` correctly */
+
 body {
   @apply bg-background font-sans text-base text-foreground;
   font-family: var(--font-body);

@@ -13,7 +13,7 @@ export const FooterLogo = () => {
         height={78}
         unoptimized
       />
-      <p className="text-base text-center text-sky-100">
+      <p className="text-sm tracking-wider text-center text-secondary">
         Your ultimate surfing destination for gear, community, and adventures.
       </p>
     </div>

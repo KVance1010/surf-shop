@@ -6,8 +6,8 @@ import env from "@/validations/env";
 const sql = neon(env.DATABASE_URL!);
 
 const db = drizzle(sql, {
-  schema: schemas
-  //  logger: true
+  schema: schemas,
+  logger: true
 });
 
 export type DB = typeof db;
