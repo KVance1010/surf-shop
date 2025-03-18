@@ -35,7 +35,6 @@ export function CreatePostForm({
     setLoading(true);
     try {
 
-
       if (file) {
         setStatusMessage("Uploading...");
         const checksum = await getChecksumSHA256(file);

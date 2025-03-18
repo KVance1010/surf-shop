@@ -67,6 +67,5 @@ export const getSignedURL = async (type: string, fileSize: number, checksum: str
 
   const signedURL = await getSignedUrl(s3, putObjectCommand, { expiresIn: 60 });
 
-
   return { success: { url: signedURL } };
 };
