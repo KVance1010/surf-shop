@@ -1,11 +1,19 @@
 "use client";
-
+import { getSignedURL } from "@/actions/images/create-image";
+import { cn } from "@/utils/tailwind-clsx";
 import Image from "next/image";
 import { useState } from "react";
-import { cn } from "@/utils/tailwind-clsx";
-import { getSignedURL } from "@/actions/images/create-image";
 
-export  function CreatePostForm({
+
+const getChecksumSHA256 = async (file: File) => {
+  const buffer = await file.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
+export function CreatePostForm({
   user
 }: {
   user: { name?: string | null; image?: string | null };
@@ -19,63 +27,47 @@ export  function CreatePostForm({
 
   const buttonDisabled = content.length < 1 || loading;
 
-  // const computeSHA256 = async (file: File) => {
-  //   const buffer = await file.arrayBuffer();
-  //   const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-  //   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  //   const hashHex = hashArray
-  //     .map((b) => b.toString(16).padStart(2, "0"))
-  //     .join("");
-  //   return hashHex;
-  // };
-
-  const handleFileUpload = async (file: File) => {
-    // const signedURLResult = await getSignedURL({
-    //   fileSize: file.size,
-    //   fileType: file.type,
-    //   checksum: await computeSHA256(file)
-    // });
-    const singedURLResults = await getSignedURL()
-    // if (signedURLResult.failure !== undefined) {
-    //   throw new Error(signedURLResult.failure);
-    // }
-    // const { url, id: fileId } = signedURLResult.success;
-    // await fetch(url, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": file.type
-    //   },
-    //   body: file
-    // });
-
-    // const fileUrl = url.split("?")[0];
-    // return fileId;
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setStatusMessage("creating");
     setLoading(true);
     try {
-      // let fileId: number | undefined = undefined;
+
+
       if (file) {
         setStatusMessage("Uploading...");
-        // fileId = await handleFileUpload(file);
+        const checksum = await getChecksumSHA256(file);
+
+        const signedURLResult = await getSignedURL(
+          file.type,
+          file.size,
+          checksum
+        );
+
+        if (signedURLResult.failure !== undefined) {
+          setStatusMessage("failed")
+          throw (new Error(signedURLResult.failure))
+        }
+
+        const url = signedURLResult.success?.url;
+        if (url) {
+          await fetch(url, {
+            method: "PUT",
+            body: file,
+            headers: { "Coontent-Type": file.type }
+          })
+        }
       }
-      console.log(content, file);
-      setStatusMessage("Posting post...");
-
-      // await createPost({
-      //   content,
-      //   fileId: fileId
-      // });
-
-      setStatusMessage("Post Successful");
-    } catch (error) {
-      console.error(error);
-      setStatusMessage("Post failed");
+    } catch (e) {
+      setStatusMessage("failed");
+      console.error(e)
     } finally {
       setLoading(false);
     }
+    setStatusMessage("Post Successful");
+    setLoading(false);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,7 +148,7 @@ export  function CreatePostForm({
                 className="bg-transparent flex-1 border-none outline-none hidden"
                 name="media"
                 type="file"
-                accept="image/jpeg,image/png,video/mp4,video/quicktime"
+                accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm,video/avi,video/mov,video/wmv,video/flv,video/mpeg"
                 onChange={handleFileChange}
               />
             </label>

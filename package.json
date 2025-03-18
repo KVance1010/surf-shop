@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.8.0",
+    "@aws-sdk/client-s3": "^3.758.0",
+    "@aws-sdk/s3-request-presigner": "^3.758.0",
     "@hookform/resolvers": "^3.10.0",
     "@neondatabase/serverless": "^0.10.4",
     "@radix-ui/react-navigation-menu": "^1.2.5",

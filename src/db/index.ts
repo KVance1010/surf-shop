@@ -7,7 +7,7 @@ const sql = neon(env.DATABASE_URL!);
 
 const db = drizzle(sql, {
   schema: schemas,
-  logger: true
+  // logger: true
 });
 
 export type DB = typeof db;

@@ -13,11 +13,16 @@ const envSchema = z.object({
   MAILER_EMAIL: z.string().min(8),
   MAILER_PASSWORD: z.string().min(8),
   // if the service is on the list of nodemailer services, use it instead of host, port, secure
-  MAILER_SERVICE: z.string().min(2)
+  MAILER_SERVICE: z.string().min(2),
 
   // Alternatively use host, port, secure
   // MAILER_PORT: z.string().min(2),
   // MAILER_HOST: z.string().min(2)
+
+  AWS_ACCESS_KEY: z.string().min(2),
+  AWS_SECRET_ACCESS_KEY: z.string().min(2),
+  AWS_BUCKET_NAME: z.string().min(2),
+  AWS_BUCKET_REGION: z.string().min(2)
 });
 
 expand(config());
