@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { pgTable, text } from "drizzle-orm/pg-core";
-import { images, products } from "@/db/schemas";
+import { media, products } from "@/db/schemas";
 
 export const categories = pgTable("categories", {
   id: text()
@@ -13,8 +13,8 @@ export const categories = pgTable("categories", {
 
 export const categoryRelations = relations(categories, ({ many, one }) => ({
   products: many(products),
-  categoryImage: one(images, {
+  categoryImage: one(media, {
     fields: [categories.imageId],
-    references: [images.id]
+    references: [media.id]
   })
 }));

@@ -23,7 +23,7 @@ export const categories = [
 ];
 
 export const favProducts = {
- womens: [
+  womens: [
     {
       id: "women1",
       name: "Swimsuit",
@@ -45,7 +45,7 @@ export const favProducts = {
       mainImage: { url: "/wetsuits.png", alt: "swimsuit" }
     }
   ],
-  mens:[
+  mens: [
     {
       id: "men1",
       name: "Swimsuit",

@@ -1,6 +1,7 @@
+import { users } from "@/db/schemas";
 import { relations } from "drizzle-orm";
 import { decimal, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { users, products } from "@/db/schemas";
+import { cartItems } from "./cart-items";
 
 export const carts = pgTable("carts", {
   id: text()
@@ -22,5 +23,5 @@ export const carts = pgTable("carts", {
 
 export const cartRelations = relations(carts, ({ one, many }) => ({
   user: one(users, { fields: [carts.userId], references: [users.id] }),
-  items: many(products)
+  items: many(cartItems)
 }));

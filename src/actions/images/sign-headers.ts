@@ -1,19 +1,21 @@
 "use server";
-import { auth } from "@/auth";
-import env from "@/validations/env";
+import { createMedia } from "@/db/queries/media";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from "crypto";
+import { currentUser } from "@/utils/auth-session";
+import env from "@/validations/env";
 
-const generateFileName= (bytes=32) => crypto.randomBytes(bytes).toString("hex");
+const generateFileName = (bytes = 32) =>
+  crypto.randomBytes(bytes).toString("hex");
 
 const s3 = new S3Client({
-  region: env.AWS_BUCKET_REGION
-  , credentials:{
+  region: env.AWS_BUCKET_REGION,
+  credentials: {
     accessKeyId: env.AWS_ACCESS_KEY,
     secretAccessKey: env.AWS_SECRET_ACCESS_KEY
   }
-})
+});
 
 // used for edge runtime
 // const generateFileName= (bytes=32) => {
@@ -35,23 +37,28 @@ const acceptedTypes = [
   "video/wmv",
   "video/flv",
   "video/mpeg"
-]
+];
 
 const maxFileSize = 1024 * 1024 * 10;
 
-export const getSignedURL = async (type: string, fileSize: number, checksum: string) => {
-  const session = await auth();
+export const getSignedURL = async (
+  type: string,
+  fileSize: number,
+  checksum: string,
+  alt: string = "user supplied content"
+) => {
+  const user= await currentUser();
 
-  if (!session) {
+  if (!user) {
     return { failure: "not authenticated" };
   }
-  
-  if(!acceptedTypes.includes(type)){
-    return {failure: "invalid file type"}
+
+  if (!acceptedTypes.includes(type)) {
+    return { failure: "invalid file type" };
   }
 
-  if(fileSize > maxFileSize){
-    return {failure: "file too large"}
+  if (fileSize > maxFileSize) {
+    return { failure: "file too large" };
   }
 
   const putObjectCommand = new PutObjectCommand({
@@ -61,11 +68,17 @@ export const getSignedURL = async (type: string, fileSize: number, checksum: str
     ContentLength: fileSize,
     ChecksumSHA256: checksum,
     Metadata: {
-      userId: session.user.id
+      userId: user.id
     }
-  })
+  });
 
   const signedURL = await getSignedUrl(s3, putObjectCommand, { expiresIn: 60 });
 
-  return { success: { url: signedURL } };
+  const media = await createMedia({
+    url: signedURL.split("?")[0], 
+    alt: alt,
+    type: type.startsWith("image/") ? "image" : "video"
+    });
+
+  return { success: { url: signedURL, mediaId: media.id } };
 };

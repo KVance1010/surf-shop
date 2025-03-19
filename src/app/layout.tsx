@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import { Lato, Montserrat, Poppins } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { cn } from "@/utils/tailwind-clsx";
+import type { Metadata } from "next";
+import { Lato, Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 
 const montserrat = Montserrat({

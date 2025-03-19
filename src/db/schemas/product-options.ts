@@ -1,5 +1,6 @@
-import { boolean, decimal, pgTable, text, unique } from "drizzle-orm/pg-core";
 import { products } from "@/db/schemas/products";
+import { relations } from "drizzle-orm";
+import { boolean, decimal, pgTable, text, unique } from "drizzle-orm/pg-core";
 
 export const productOptions = pgTable(
   "product_options",
@@ -25,3 +26,10 @@ export const productOptions = pgTable(
     )
   })
 );
+
+export const productOptionRelations = relations(productOptions, ({ one }) => ({
+  product: one(products, {
+    fields: [productOptions.productId],
+    references: [products.id]
+  })
+}));

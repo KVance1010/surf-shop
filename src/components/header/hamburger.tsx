@@ -9,7 +9,11 @@ export const HamburgerMenu = async () => {
 
   return (
     <label className="flex flex-col justify-center mb-1 gap-2 w-10 h-10 max-sm:w-7  cursor-pointer relative">
-      <input id="hamburger-checkbox" type="checkbox" className="peer hidden group" />
+      <input
+        id="hamburger-checkbox"
+        type="checkbox"
+        className="peer hidden group"
+      />
 
       <div
         className="w-4/5 h-[2px] bg-secondary rounded-md transition-all duration-500 translate-x-[2px] 

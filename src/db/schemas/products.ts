@@ -1,6 +1,13 @@
+import {
+  categories,
+  media,
+  orderItems,
+  productImages,
+  productOptions,
+  reviews
+} from "@/db/schemas";
 import { relations } from "drizzle-orm";
 import { boolean, decimal, integer, pgTable, text } from "drizzle-orm/pg-core";
-import { categories, images, orderItems, reviews, productOptions } from "@/db/schemas";
 import { timestamps } from "./timestamps";
 
 export const products = pgTable("products", {
@@ -11,7 +18,9 @@ export const products = pgTable("products", {
   slug: text("slug").unique(),
   categoryId: text("category_id"),
   brand: text("brand"),
-  costOfItem: decimal("cost_of_item", { precision: 12, scale: 2 }).default("0.00"),
+  costOfItem: decimal("cost_of_item", { precision: 12, scale: 2 }).default(
+    "0.00"
+  ),
   description: text("description"),
   price: decimal("price", { precision: 12, scale: 2 }).default("0.00"),
   rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"),
@@ -25,11 +34,11 @@ export const products = pgTable("products", {
 export const productRelations = relations(products, ({ many, one }) => ({
   orders: many(orderItems),
   reviews: many(reviews),
-  images: many(images),
-  productImage: one(images, {
+  mainImage: one(media, {
     fields: [products.mainImage],
-    references: [images.id]
+    references: [media.id]
   }),
+  galleryImages: many(productImages),
   category: one(categories, {
     fields: [products.categoryId],
     references: [categories.id]

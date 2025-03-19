@@ -6,8 +6,13 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { login } from "@/actions/auth/login";
-import { FormButton, FormInput, FormWrapper, FormError } from "@/components/ui/form";
 import { Socials } from "@/components/ui-custom/socials";
+import {
+  FormButton,
+  FormError,
+  FormInput,
+  FormWrapper
+} from "@/components/ui/form";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { LoginType, LoginValidation } from "@/validations";
 

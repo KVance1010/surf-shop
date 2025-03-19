@@ -1,8 +1,8 @@
+import { Apparel } from "./apparel";
+import { Community } from "./community";
 import { Hero } from "./hero";
 import { Shop } from "./shop";
-import { Apparel } from "./apparel";
 import { Videos } from "./videos";
-import { Community } from "./community";
 
 export const HomePageContent = () => {
   return (

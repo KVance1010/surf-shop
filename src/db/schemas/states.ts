@@ -1,4 +1,4 @@
-import {text, pgTable} from "drizzle-orm/pg-core";
+import { pgTable, text } from "drizzle-orm/pg-core";
 
 export const states = pgTable("states", {
   id: text()

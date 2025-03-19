@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { TitleContainer } from "@/components/ui-custom/title-container";
 import { CTAButton } from "./videos/cta-button";
 import { VideoGrid } from "./videos/video-grid";
-import Image from "next/image";
 
 export const Videos = () => {
   return (

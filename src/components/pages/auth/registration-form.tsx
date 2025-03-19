@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { register } from "@/actions/auth/register";
-import { FormButton, FormInput, FormWrapper } from "@/components/ui/form";
 import { Socials } from "@/components/ui-custom/socials";
+import { FormButton, FormInput, FormWrapper } from "@/components/ui/form";
 import { RegistrationType, RegistrationValidation } from "@/validations";
 
 export const RegistrationForm = () => {

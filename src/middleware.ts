@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
+import {
+    DEFAULT_LOGIN_REDIRECT,
+    adminRoutes,
+    apiAuthPrefix,
+    authRoutes,
+    publicRoutes
+} from "@/routes";
 import NextAuth from "next-auth";
 import { getToken } from "next-auth/jwt";
-import {
-  DEFAULT_LOGIN_REDIRECT,
-  adminRoutes,
-  apiAuthPrefix,
-  authRoutes,
-  publicRoutes
-} from "@/routes";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
 import authConfig from "./auth.config";
 
 const { auth } = NextAuth(authConfig);
@@ -50,9 +51,25 @@ export default auth(async (req) => {
   return NextResponse.next();
 });
 
+export function middleware(request: NextRequest) {
+  // Only handle requests to ffmpeg files
+  if (request.nextUrl.pathname.startsWith('/ffmpeg/')) {
+    const response = NextResponse.next();
+    
+    // Add CORS headers for WASM files
+    response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+    response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
+    
+    return response;
+  }
+
+  return NextResponse.next();
+}
+
 export const config = {
   matcher: [
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|mp4|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    "/(api|trpc)(.*)"
+    "/(api|trpc)(.*)",
+    '/ffmpeg/:path*'
   ]
 };

@@ -48,11 +48,11 @@ export const videoDropdown: DropdownItem[] = [
 export const navHeaders = [
   {
     title: "Store",
-    extendedMenu: storeDropdown,
+    extendedMenu: storeDropdown
   },
   {
     title: "Videos",
-    extendedMenu: videoDropdown,
+    extendedMenu: videoDropdown
   },
   {
     title: "Messages",

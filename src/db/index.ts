@@ -6,7 +6,7 @@ import env from "@/validations/env";
 const sql = neon(env.DATABASE_URL!);
 
 const db = drizzle(sql, {
-  schema: schemas,
+  schema: schemas
   // logger: true
 });
 

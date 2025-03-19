@@ -12,7 +12,9 @@ export const reviews = pgTable("reviews", {
   description: text("description"),
   isVerifiedPurchase: text("is_verified_purchase"),
   userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
-  productId: text("product_id").references(() => products.id, { onDelete: "cascade" }),
+  productId: text("product_id").references(() => products.id, {
+    onDelete: "cascade"
+  }),
   ...timestamps
 });
 

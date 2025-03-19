@@ -8,7 +8,7 @@ export const SocialIcons = () => {
       url: "https://www.instagram.com",
       alt: "Instagram",
       width: 20,
-      height: 20,
+      height: 20
     },
     {
       name: "Facebook",
@@ -16,7 +16,7 @@ export const SocialIcons = () => {
       url: "https://www.facebook.com",
       alt: "Facebook",
       width: 20,
-      height: 20,
+      height: 20
     },
     {
       name: "Twitter",
@@ -24,7 +24,7 @@ export const SocialIcons = () => {
       url: "https://www.twitter.com",
       alt: "Twitter",
       width: 20,
-      height: 20,
+      height: 20
     },
     {
       name: "YouTube",
@@ -32,8 +32,8 @@ export const SocialIcons = () => {
       url: "https://www.youtube.com",
       alt: "YouTube",
       width: 20,
-      height: 20,
-    },
+      height: 20
+    }
   ];
 
   return (
@@ -45,7 +45,13 @@ export const SocialIcons = () => {
           className="flex justify-center items-center p-2 hover:bg-contrast rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent"
           aria-label={`Visit our ${social.name} page`}
         >
-          <Image src={social.src} alt={social.name} width={social.width} height={social.height} unoptimized/>
+          <Image
+            src={social.src}
+            alt={social.name}
+            width={social.width}
+            height={social.height}
+            unoptimized
+          />
         </a>
       ))}
     </>

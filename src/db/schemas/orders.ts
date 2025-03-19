@@ -1,8 +1,14 @@
+import { addresses, orderItems, users } from "@/db/schemas";
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, pgEnum } from "drizzle-orm/pg-core";
-import { orderItems, users, addresses } from "@/db/schemas";
+import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-export const OrderStatus = pgEnum("status", ["PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"]);
+export const OrderStatus = pgEnum("status", [
+  "PENDING",
+  "CONFIRMED",
+  "SHIPPED",
+  "DELIVERED",
+  "CANCELLED"
+]);
 
 export const orders = pgTable("orders", {
   id: text()
@@ -22,6 +28,14 @@ export const orders = pgTable("orders", {
   orderDate: timestamp("order_date", { mode: "date" }).defaultNow().notNull()
 });
 
-export const orderRelations = relations(orders, ({ many }) => ({
-  items: many(orderItems)
+export const orderRelations = relations(orders, ({ many, one }) => ({
+  items: many(orderItems),
+  user: one(users, {
+    fields: [orders.userId],
+    references: [users.id]
+  }),
+  shippingAddress: one(addresses, {
+    fields: [orders.shippingAddress],
+    references: [addresses.id]
+  })
 }));

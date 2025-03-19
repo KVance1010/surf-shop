@@ -1,0 +1,162 @@
+// Users table
+Table users {
+  id text [pk]
+  name text
+  email text
+  username text
+  password text
+  emailVerified timestamp
+  image text
+  role enum
+  isTwoFactorEnabled boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// Products table
+Table products {
+  id text [pk]
+  name text
+  slug text
+  categoryId text [ref: > categories.id]
+  brand text
+  costOfItem decimal
+  description text
+  price decimal
+  rating decimal
+  numReviews integer
+  isFeatured boolean
+  mainImage text [ref: > media.id]
+  banner text
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// Categories table
+Table categories {
+  id text [pk]
+  name text
+  slug text
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// Orders table
+Table orders {
+  id text [pk]
+  userId text [ref: > users.id]
+  name text
+  shippingAddress text [ref: > addresses.id]
+  paymentMethod text
+  paymentResult text
+  subTotal text
+  shippingPrice text
+  taxPrice text
+  totalPrice text
+  status enum
+  deliveredAt text
+  orderDate timestamp
+}
+
+// Order Items table
+Table orderItems {
+  id text [pk]
+  orderId text [ref: > orders.id]
+  productId text [ref: > products.id]
+  qty text
+  price text
+}
+
+// Media table
+Table media {
+  id text [pk]
+  url text
+  alt text
+  type text
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// Product Images table
+Table productImages {
+  id text [pk]
+  productId text [ref: > products.id]
+  mediaId text [ref: > media.id]
+}
+
+// Addresses table
+Table addresses {
+  id text [pk]
+  userId text [ref: > users.id]
+  address text
+  city text
+  postalCode text
+  stateId text [ref: > states.id]
+}
+
+// States table
+Table states {
+  id text [pk]
+  name text
+  code text
+}
+
+// Carts table
+Table carts {
+  id text [pk]
+  userId text [ref: > users.id]
+  itemsPrice decimal
+  totalPrice decimal
+  shippingPrice decimal
+  taxPrice decimal
+  createdAt timestamp
+}
+
+// Cart Items table
+Table cartItems {
+  id text [pk]
+  cartId text [ref: > carts.id]
+  productId text [ref: > products.id]
+  qty text
+  price text
+}
+
+// Reviews table
+Table reviews {
+  id text [pk]
+  userId text [ref: > users.id]
+  productId text [ref: > products.id]
+  rating integer
+  comment text
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// Product Options table
+Table productOptions {
+  id text [pk]
+  productId text [ref: > products.id]
+  isActive boolean
+  price decimal
+  stock text
+  size text
+  color text
+  colorHexValue text
+}
+
+// Relationships
+Ref: users.id < orders.userId
+Ref: users.id < reviews.userId
+Ref: users.id < addresses.userId
+Ref: users.id < carts.userId
+Ref: products.id < orderItems.productId
+Ref: products.id < reviews.productId
+Ref: products.id < productOptions.productId
+Ref: products.id < productImages.productId
+Ref: products.mainImage > media.id
+Ref: categories.id < products.categoryId
+Ref: orders.id < orderItems.orderId
+Ref: orders.shippingAddress > addresses.id
+Ref: media.id < productImages.mediaId
+Ref: carts.id < cartItems.cartId
+Ref: cartItems.productId > products.id 

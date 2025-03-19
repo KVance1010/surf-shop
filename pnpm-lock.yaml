@@ -83,6 +83,9 @@ importers:
       uuid:
         specifier: ^11.1.0
         version: 11.1.0
+      webm-wasm:
+        specifier: ^0.4.1
+        version: 0.4.1
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -3242,6 +3245,9 @@ packages:
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
+
+  webm-wasm@0.4.1:
+    resolution: {integrity: sha512-FOKtpyY8tXcaWEarq2+o9v+DvnVqeuJPXDSfgp99UWMavkSUNsSh1T4By6Q9BBgTFTWxrcJNlwxVvHGQ3/xP5Q==}
 
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
@@ -6729,6 +6735,8 @@ snapshots:
   uuid@11.1.0: {}
 
   uuid@9.0.1: {}
+
+  webm-wasm@0.4.1: {}
 
   which-boxed-primitive@1.1.1:
     dependencies:
