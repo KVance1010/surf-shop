@@ -1,5 +1,5 @@
-import { sql } from "drizzle-orm";
-import { relations } from "drizzle-orm";
+import { addresses, carts, orders, reviews } from "@/db/schemas";
+import { relations, sql } from "drizzle-orm";
 import {
   type AnyPgColumn,
   boolean,
@@ -9,7 +9,6 @@ import {
   timestamp,
   uniqueIndex
 } from "drizzle-orm/pg-core";
-import { addresses, orders, reviews } from "@/db/schemas";
 import { timestamps } from "./timestamps";
 
 export const UserRoles = pgEnum("role", ["USER", "ADMIN", "MODERATOR"]);
@@ -32,6 +31,7 @@ export const users = pgTable(
     image: text(),
     role: UserRoles().default("USER").notNull(),
     isTwoFactorEnabled: boolean("is_two_factor_enabled").default(false),
+    cartId: text("cart_id").references(() => carts.id, { onDelete: "cascade" }),
     ...timestamps
   },
   (table) => [

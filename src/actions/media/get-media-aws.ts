@@ -25,23 +25,13 @@ const s3 = new S3Client({
 // }
 
 const acceptedTypes = [
-  "image/jpeg",
-  "image/png",
   "image/webp",
-  "image/gif",
-  "video/mp4",
-  "video/quicktime",
-  "video/webm",
-  "video/avi",
-  "video/mov",
-  "video/wmv",
-  "video/flv",
-  "video/mpeg"
+  "video/webm"
 ];
 
-const maxFileSize = 1024 * 1024 * 10;
+const maxFileSize = 1024 * 1024 * 20;
 
-export const getSignedURL = async (
+export const getMediaAWS = async (
   type: string,
   fileSize: number,
   checksum: string,

@@ -48,18 +48,28 @@ export default auth(async (req) => {
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/login", nextUrl));
   }
+
   return NextResponse.next();
 });
 
 export function middleware(request: NextRequest) {
-  // Only handle requests to ffmpeg files
-  if (request.nextUrl.pathname.startsWith('/ffmpeg/')) {
+  const { pathname } = request.nextUrl;
+
+  // Handle webm-wasm files
+  if (pathname.startsWith('/webm-wasm/')) {
     const response = NextResponse.next();
-    
-    // Add CORS headers for WASM files
+
+    // Set MIME types
+    if (pathname.endsWith('.js')) {
+      response.headers.set('Content-Type', 'application/javascript');
+    } else if (pathname.endsWith('.wasm')) {
+      response.headers.set('Content-Type', 'application/wasm');
+    }
+
+    // Set CORS headers
     response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
     response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
-    
+
     return response;
   }
 
@@ -70,6 +80,6 @@ export const config = {
   matcher: [
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|mp4|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     "/(api|trpc)(.*)",
-    '/ffmpeg/:path*'
+    '/webm-wasm/:path*'
   ]
 };

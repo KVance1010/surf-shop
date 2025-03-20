@@ -1,97 +1,133 @@
-declare const WebMWriter: any;
+// NOTE: To use MP4 instead of WebM, you would need to:
+// 1. Rename this file to convert-to-mp4.ts
+// 2. Change the function name to convertToMP4
+// 3. Use a different encoder since MediaRecorder doesn't widely support MP4
+// 4. Consider using mp4box.js or similar library for MP4 encoding
 
-async function ensureWebMWriterLoaded(): Promise<void> {
-  if (typeof WebMWriter === 'undefined') {
-    await new Promise<void>((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = '/webm-wasm/webm-wasm.js';
-      script.async = true;
-      script.onload = () => {
-        if (typeof WebMWriter === 'undefined') {
-          reject(new Error('WebMWriter not found after script load'));
-        } else {
-          resolve();
-        }
-      };
-      script.onerror = (error) => reject(new Error(`Failed to load WebMWriter: ${error}`));
-      document.head.appendChild(script);
-    });
-  }
+interface ExtendedHTMLVideoElement extends HTMLVideoElement {
+  mozHasAudio?: boolean;
+  webkitAudioDecodedByteCount?: number;
+  audioTracks?: { length: number };
 }
 
 export async function convertToWebM(
   file: File,
   onProgress?: (progress: number) => void
 ): Promise<File> {
-  try {
-    // Ensure WebMWriter is loaded
-    await ensureWebMWriterLoaded();
+  return new Promise((resolve, reject) => {
+    try {
+      const video = document.createElement('video');
+      video.src = URL.createObjectURL(file);
+      video.muted = true;
 
-    // Create a video element to read the video
-    const video = document.createElement('video');
-    video.src = URL.createObjectURL(file);
-    
-    // Wait for video metadata to load
-    await new Promise((resolve) => {
-      video.onloadedmetadata = resolve;
-    });
+      video.onloadedmetadata = async () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext('2d')!;
 
-    // Create a canvas to capture frames
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    if (!ctx) throw new Error('Could not get canvas context');
+          const stream = canvas.captureStream(30); // 30 FPS
 
-    // Set canvas size to match video dimensions
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+          // Calculate optimal bitrate based on resolution and input file size
+          // More aggressive compression:
+          // 1. Calculate bits per second from input file
+          // 2. Use 60% of input bitrate
+          // 3. Cap based on resolution
+          const inputBitsPerSecond = (file.size * 8) / video.duration;
+          const resolutionFactor = (video.videoWidth * video.videoHeight) / (1920 * 1080);
+          const maxBitrate = Math.min(
+            1_000_000, // 1 Mbps absolute max
+            1_000_000 * resolutionFactor // Scale with resolution
+          );
+          
+          const targetBitrate = Math.min(
+            maxBitrate,
+            Math.floor(inputBitsPerSecond * 0.6) // 60% of input bitrate
+          );
 
-    // Create WebM writer
-    const writer = new WebMWriter({
-      width: video.videoWidth,
-      height: video.videoHeight,
-      frameRate: 30,
-      quality: 0.8,
-    });
+          // NOTE: For MP4 conversion, this section would need to change:
+          // const mp4Encoder = new MP4Encoder({
+          //   width: video.videoWidth,
+          //   height: video.videoHeight,
+          //   fps: 30,
+          //   bitrate: targetBitrate, // Use same bitrate calculation for MP4
+          //   codec: 'h264',         // Use H.264 for better compatibility
+          //   quality: 'medium'      // Balance between size and quality
+          // });
 
-    // Start video playback
-    video.play();
+          // Try VP9 first for better compression, fall back to VP8
+          let mimeType = 'video/webm;codecs=vp9';
+          if (!MediaRecorder.isTypeSupported(mimeType)) {
+            mimeType = 'video/webm;codecs=vp8';
+          }
 
-    // Capture frames and encode them
-    const frameInterval = 1000 / 30; // 30fps
-    const duration = video.duration * 1000; // Convert to milliseconds
-    let currentTime = 0;
+          const recorder = new MediaRecorder(stream, {
+            mimeType,
+            videoBitsPerSecond: targetBitrate
+          });
 
-    while (currentTime < duration) {
-      // Set video time and wait for seek
-      video.currentTime = currentTime / 1000;
-      await new Promise((resolve) => {
-        video.onseeked = resolve;
-      });
+          const chunks: Blob[] = [];
+          // Request larger chunks for better compression
+          recorder.ondataavailable = (e) => chunks.push(e.data);
 
-      // Draw frame to canvas
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          // NOTE: For MP4, the output handling would change:
+          // - Change Blob type to 'video/mp4'
+          // - Change file extension to .mp4
+          // - Use mp4box.js to properly mux the video
+          recorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'video/webm' });
+            resolve(new File([blob], file.name.replace(/\.[^/.]+$/, '.webm'), { type: 'video/webm' }));
+            URL.revokeObjectURL(video.src);
+          };
 
-      // Add frame to WebM
-      await writer.addFrame(canvas);
+          // Start recording with larger timeslice for better compression
+          recorder.start(1000); // 1 second chunks
 
-      // Update progress
-      if (onProgress) {
-        onProgress(Math.round((currentTime / duration) * 100));
-      }
+          await video.play();
 
-      currentTime += frameInterval;
+          const duration = video.duration;
+          let currentTime = 0;
+          const frameInterval = 1000 / 30; // 30fps
+
+          // NOTE: Frame drawing would remain similar for MP4,
+          // but the frames would be fed to the MP4 encoder instead
+          // of the MediaRecorder. The MP4 encoder would need to handle
+          // the raw frame data and encode it using the H.264 codec
+          const drawFrame = async () => {
+            if (currentTime <= duration) {
+              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+              
+              if (onProgress) {
+                onProgress((currentTime / duration) * 100);
+              }
+
+              currentTime += frameInterval / 1000;
+              video.currentTime = currentTime;
+
+              await new Promise<void>((resolve) => {
+                video.onseeked = () => resolve();
+              });
+
+              requestAnimationFrame(drawFrame);
+            } else {
+              recorder.stop();
+              stream.getTracks().forEach(track => track.stop());
+            }
+          };
+
+          drawFrame();
+        } catch (error) {
+          reject(error);
+        }
+      };
+
+      video.onerror = (error) => {
+        URL.revokeObjectURL(video.src);
+        reject(new Error(`Error loading video: ${error}`));
+      };
+    } catch (error) {
+      reject(error);
     }
-
-    // Get the WebM blob
-    const blob = await writer.finalize();
-    
-    // Clean up
-    URL.revokeObjectURL(video.src);
-
-    // Create a new File object
-    return new File([blob], file.name.replace(/\.[^/.]+$/, '.webm'), { type: 'video/webm' });
-  } catch (error) {
-    console.error('Error in convertToWebM:', error);
-    throw error;
-  }
-} 
+  });
+}

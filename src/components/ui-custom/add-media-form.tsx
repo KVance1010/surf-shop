@@ -1,6 +1,6 @@
 "use client";
-// import { getSignedURL } from "@/actions/images/sign-headers";
-// import { getChecksumSHA256 } from "@/utils/checksum";
+import { getMediaAWS } from "@/actions/media/get-media-aws";
+import { getChecksumSHA256 } from "@/utils/checksum";
 import { convertToWebM } from "@/utils/convert-to-webm";
 import { convertToWebP } from "@/utils/convert-webp";
 import Image from "next/image";
@@ -18,7 +18,6 @@ export function AddMediaForm({
     const [loading, setLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(true);
     const [isDragging, setIsDragging] = useState(false);
-    const [conversionProgress, setConversionProgress] = useState(0);
 
     const handleFileSelect = (selectedFile: File | null) => {
         setFile(selectedFile);
@@ -30,7 +29,6 @@ export function AddMediaForm({
             setPreviewUrl(url);
             setStatusMessage("");
             setIsSuccess(true);
-            setConversionProgress(0);
         } else {
             setPreviewUrl(null);
         }
@@ -42,51 +40,52 @@ export function AddMediaForm({
             if (file) {
                 setStatusMessage("Uploading...");
                 setLoading(true);
-                setConversionProgress(0);
+
 
                 let fileToUpload = file;
 
-                if (file.type.startsWith('image/')) {
-                    fileToUpload = await convertToWebP(file);
-                } else if (file.type.startsWith('video/')) {
-                    try {
+                try {
+                    if (file.type.startsWith('image/')) {
+                        fileToUpload = await convertToWebP(file);
+                    } else if (file.type.startsWith('video/')) {
                         fileToUpload = await convertToWebM(file, (progress) => {
-                            setConversionProgress(Math.round(progress));
                             setStatusMessage(`Converting video: ${Math.round(progress)}%`);
                         });
-                    } catch (error) {
-                        setStatusMessage("Video conversion failed");
-                        throw error;
                     }
+                } catch (error) {
+                    setStatusMessage("upload failed");
+                    throw error;
                 }
-                console.log(fileToUpload)
-                // const checksum = await getChecksumSHA256(fileToUpload);
-                // const signedURLResult = await getSignedURL(
-                //     fileToUpload.type,
-                //     fileToUpload.size,
-                //     checksum
-                // );
+                console.log("file size", file.size)
+                console.log("file to upload size", fileToUpload.size)
+                console.log("file to upload type", fileToUpload.type)
+                console.log("file to upload", fileToUpload)
+                const checksum = await getChecksumSHA256(fileToUpload);
+                const signedURLResult = await getMediaAWS(
+                    fileToUpload.type,
+                    fileToUpload.size,
+                    checksum
+                );
 
-                // if (signedURLResult.failure !== undefined) {
-                //     setStatusMessage("Upload failed");
-                //     throw new Error(signedURLResult.failure);
-                // }
+                if (signedURLResult.failure !== undefined) {
+                    setStatusMessage("Upload failed");
+                    throw new Error(signedURLResult.failure);
+                }
 
-                // const { url, mediaId } = signedURLResult.success;
+                const { url, mediaId } = signedURLResult.success;
+                console.log(url)
+                await fetch(url, {
+                    method: "PUT",
+                    body: fileToUpload,
+                    headers: { "Content-Type": fileToUpload.type }
+                });
 
-                // await fetch(url, {
-                //     method: "PUT",
-                //     body: fileToUpload,
-                //     headers: { "Content-Type": fileToUpload.type }
-                // });
-
-                // console.log(mediaId)
-                // setStatusMessage("Upload successful!");
-                // setIsSuccess(true);
-                // setPreviewUrl(null);
-                // setFile(null);
-                // setAltText("");
-                // setConversionProgress(0);
+                console.log(mediaId)
+                setStatusMessage("Upload successful!");
+                setIsSuccess(true);
+                setPreviewUrl(null);
+                setFile(null);
+                setAltText("");
             }
             else {
                 setIsSuccess(false);
@@ -98,7 +97,6 @@ export function AddMediaForm({
             console.error(e);
         } finally {
             setLoading(false);
-            setConversionProgress(0);
         }
     };
 
@@ -192,19 +190,6 @@ export function AddMediaForm({
                         <p className={isSuccess ? "bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded relative" : "bg-red-200 border border-red-500 text-red-500 px-4 py-3 rounded relative"}>
                             {statusMessage}
                         </p>
-                        {conversionProgress > 0 && file?.type.startsWith('video/') && (
-                            <div className="mt-2">
-                                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div
-                                        className="bg-primary h-2.5 rounded-full transition-all duration-300"
-                                        style={{ width: `${conversionProgress}%` }}
-                                    ></div>
-                                </div>
-                                <p className="text-sm text-gray-600 mt-1 text-center">
-                                    {conversionProgress}% complete
-                                </p>
-                            </div>
-                        )}
                     </div>
                 )}
             </div>
